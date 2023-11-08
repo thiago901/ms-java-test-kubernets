@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-deployment
+spec:
+  replicas: {{ .Values.app.apiGateway.replicas }}
+  selector:
+    matchLabels:
+      app: api-gateway-app
+  template:
+    metadata:
+      labels:
+        app: api-gateway-app
+    spec:
+      containers:
+        - name: api-gateway
+          image: tsrocha901/ms.java.api.gateway:latest
+          env:
+            - name: spring.rabbitmq.addresses
+              value: {{ .Values.app.apiGateway.rabbitMQ }}
+            - name: server.port
+              value: "8080"

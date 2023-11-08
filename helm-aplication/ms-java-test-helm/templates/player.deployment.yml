@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: player-deployment
+spec:
+  replicas: {{ .Values.app.player.replicas }}
+  selector:
+    matchLabels:
+      app: player-app
+  template:
+    metadata:
+      labels:
+        app: player-app
+    spec:
+      containers:
+        - name: player
+          image: tsrocha901/ms.java.player:latest
+          env:
+            - name: spring.rabbitmq.addresses
+              value: {{ .Values.app.player.rabbitMQ }}
+            - name: spring.data.mongodb.uri
+              value: {{ .Values.app.player.databaseURL }}

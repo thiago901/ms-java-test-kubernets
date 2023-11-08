@@ -1,0 +1,5 @@
+app:
+  player:
+    replicas: 2
+  apiGateway:
+    replicas: 2
